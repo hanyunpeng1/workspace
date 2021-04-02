@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table{
+            position: absolute;
+            top: 35%;
+            left: 37%;
+        }
+    </style>
+</head>
+<body bgcolor="#6495ed">
+<center>
+    <form action="/myWeb/admin/login" method="get">
+        <table border="2px" align="center">
+            <tr style="background-color: blue">
+                <td colspan="3" align="center">
+                    <font color="white" size="20">系统管理员模块</font>
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style:none;">账号：</td>
+                <td style="border-style: none">
+                    <input type="text" name="adminName"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style:none;">密码：</td>
+                <td style="border-style: none">
+                    <input type="password" name="password">
+                </td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2" style="border-style: none">
+                    <input type="submit" value="登录">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="reset" >
+                </td>
+            </tr>
+        </table>
+    </form>
+</center>
+</body>
+</html>

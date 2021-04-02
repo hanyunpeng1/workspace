@@ -1,0 +1,19 @@
+package com.hanyun.controller;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+public class MessageAddServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userName;
+        //1、从请求头中获取参数信息userName
+        userName = request.getParameter("userName");
+        //2、调用【MessageDao】向数据库发送信息
+        //3、通过请求转发，向Tomcat索要info.jsp将处理结果写入到响应体
+        request.setAttribute("key",userName);
+        request.getRequestDispatcher("/messageAdd01.jsp").forward(request,response);
+    }
+}

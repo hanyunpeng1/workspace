@@ -1,0 +1,20 @@
+1、出现404错误，404错误：通知浏览器，由于在服务端没有定位到被访问的资源文件因此无法提供帮助；
+   出现这个错误的原因不一定是在服务端没有定位到被访问的资源文件，可能只是写完代码之后没有刷新出来而已
+   只需要你关闭tomcat开关，重新打开就可以，遇到404时，首先重打开tomcat，让他刷新。
+
+2、 欢迎你：游客         -------------》   欢迎你：张三
+    注册	登录	退出 -------------》   注册	登录	退出
+    怎么变成这样，一开始想的是用from标签来获取userName参数，点击登录之后改变userName
+    后来想直接点击登录之后改变right.html就可以了。
+
+3、 欢迎你：张三         -------------》   欢迎你：游客
+    注册    登录	退出 -------------》   注册	登录	退出
+    怎么变回来呢?开始时我变的是right.html里面的 <input>退出 这个页面的src属性，改变之后发现没有变化，
+    这才想起来现在的网页已经不是right.html了，现在右边的网页是点击登录之后改变的loginInfo.jsp页面，
+    所以要改src属性，应该改的是loginInfo.jsp这个文件里的src。
+
+4、<a href="/myWeb/admin/delete? adminId = <%=admin.getAdminId()%>" target="right" style="text-decoration:none;">删除信息</a>
+   <a href="/myWeb/admin/delete? adminId=<%=admin.getAdminId()%>" target="right" style="text-decoration:none;">删除信息</a>
+   位于admin_find.jsp中的第43行。
+   会出现404错误，下面的一行是正确的，上面的出现404错误
+   原因：可能是在使用超链接获取参数时，参数=“值”，这个值不能和等于号之间存在空格。

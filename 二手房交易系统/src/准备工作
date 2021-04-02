@@ -1,0 +1,238 @@
+                                        二手房交易系统
+一、创建数据库
+    create database HouseSale;
+二、数据库创建语句
+    管理员信息表
+    create table admin(
+        ad_id Integer primary key auto_increment,#管理员编号
+        ad_name varchar(20) not null,   #姓名
+        ad_num char(18) not null unique, #身份证号
+        ad_password varchar(20) not null #密码
+    )
+    买方信息表
+    create table buyer(
+        buyer_id INTEGER primary key auto_increment,#管理员编号
+        buy_name varchar(20) not null,   #姓名
+        buy_num char(18) not null unique, #身份证号
+        buy_tel varchar(15) not null, #电话
+        buy_evidence VARCHAR(20) not NULL,#购买凭证
+        buy_disreason varchar(255),#禁用原因
+        buy_distime DATE,#禁用时间
+        ad_id INTEGER,#禁用人
+
+        CONSTRAINT ad_id_constr #表级约束可以给约束起名字(方便以后通过这个名字来删除这个约束)
+        foreign key(ad_id) references admin(ad_id)
+        on delete CASCADE
+        on update cascade
+    )
+    卖方信息表
+    create table seller(
+        sell_id INTEGER primary key auto_increment,#管理员编号
+        sell_name varchar(20) not null,   #姓名
+        sell_num char(18) not null unique, #身份证号
+        sell_tel varchar(15) not null, #电话
+        sell_issue VARCHAR(20) not NULL,#发布权限
+        sell_disreason varchar(255),#禁用原因
+        sell_distime DATE,#禁用时间
+        ad_id INTEGER,#禁用人
+
+        constraint seller_ad_id_constr #表级约束可以给约束起名字(方便以后通过这个名字来删除这个约束)
+        foreign key(ad_id) references admin(ad_id)
+        on delete CASCADE
+        on update cascade,
+        constraint sell_issue_check check(sell_issue in('Y','N'))
+    )
+    二手房信息表
+    create table house(
+    	house_id integer primary key auto_increment,#二手房编号
+    	house_addr varchar(50) not null,#地址
+    	house_type varchar(10) not null,#户型
+    	house_prince varchar(50) not null,#价格
+    	house_time varchar(20) not null,#有效期
+    	house_status varchar(10),#状态
+    	sell_id integer not null,#发布人
+    	issue_time date not null,#发布时间
+    	house_evidence varchar(20),#房产证明
+    	app_ad_id integer,#核实人
+    	buy_id integer,#购买人
+    	sell_time date,#被购日期
+
+    	constraint house_ad_id_constr
+    	foreign key(app_ad_id) references admin(ad_id)
+    	on delete CASCADE
+    	on update cascade,
+
+    	constraint house_sell_id_constr
+    	foreign key(sell_id) references seller(sell_id)
+    	on delete no action #restrict和 no action作用差不多
+        on update cascade,
+
+    	constraint type_check check(house_type in('一居室','二居室','三居室','四居室','五居室')),
+        constraint status_check check(house_status in('审核','出售','已出售'))
+    )
+    交流联系表
+    create table chat(
+    	#chat_id integer auto_increment not null,#交流序列号
+    	buy_id integer,#买方编号
+    	sell_id integer,#卖方编号
+    	chat_content varchar(255) not null,#内容
+    	chat_time date not null,#发言时间
+
+    	primary key(buy_id,sell_id),
+
+    	constraint chat_buy_id_constr
+    	foreign key(buy_id) references buyer(buyer_id)
+    	on delete CASCADE
+    	on update cascade,
+
+    	constraint chat_sell_id_constr
+    	foreign key(sell_id) references seller(sell_id)
+        on delete no action #restrict和 no action作用差不多
+        on update cascade
+    )
+    查看联系表
+    create table see(
+    	#view_id integer auto_increment not null,#交流序列号
+    	buy_id integer,#买方编号
+    	house_id integer,#卖方编号
+    	view_time date not null,#浏览时间
+
+    	primary key(buy_id,house_id),
+
+    	constraint view_buy_id_constr
+    	foreign key(buy_id) references buyer(buyer_id)
+    	on delete CASCADE
+    	on update cascade,
+
+    	constraint view_house_id_constr
+    	foreign key(house_id) references house(house_id)
+      on delete no action #restrict和 no action作用差不多
+      on update cascade
+    )
+
+
+任务：二手房交易系统-----用户信息管理模块
+
+子任务：
+        用户信息注册 ok
+        用户登录     ok
+        用户退出     ok
+        用户信息管理 ok
+
+准备工作
+
+    1、创建数据库表
+    create database house;
+    用户信息表
+    create table Users(
+         userId int primary key auto_increment,  #用户编号
+         userName varchar(50)not null,   #用户姓名
+         password varchar(50)not null,   #用户密码
+         realName varchar(50)not null,
+         sex char(1)not null,   #用户性别 "男"或者"女"
+         address varchar(50)not null,
+         tel varchar(50)not null,
+         email varchar(50)not null,   #用户邮箱
+         user_del varchar(50)not null #管理员管理用户
+    )
+
+    2、在src下，创建 com.hanyun.entity.Users 实体类
+
+    3、在src下，创建 com.hanyun.util.JdbcUtil 工具类（复用）
+
+    4、在web下WEB-INF下创建lib文件夹，存放mysql提供JDBC实现jar包
+
+任务：二手房交易系统-----管理员信息模块
+
+子任务：
+        用户信息管理       ok
+        管理员登录         ok
+        管理员信息管理     ok
+        房源信息管理
+
+准备工作
+
+    用户信息表
+    create table Admin(
+         adminId int primary key auto_increment unique,  #管理员编号
+         adminName varchar(50)not null,   #管理员账号
+         password varchar(50)not null   #管理员密码
+    )
+
+任务：二手房交易系统-----房源信息管理模块
+
+子任务：
+        用户信息注册 ok
+        用户登录     ok
+        用户退出     ok
+        用户信息管理
+
+准备工作
+
+    房屋信息表
+    create table houses(
+         houseId varchar(500) primary key auto_increment unique,  #二手房编号编号
+         type varchar(50)not null,      #户型
+         acreage varchar(50)not null,   #面积
+         finish varchar(50) not null,   #装修
+         price varchar(255) not null,   #价格
+         address varchar(50) not null,  #地址
+         userName varchar(50)not null,  #发布人姓名
+         tel varchar(50)not null,       #发布人联系电话
+         userId int not null,           #发布人编号
+         status varchar(50) not null,   #发布状态
+
+         foreign key(userId) references users(userId)
+         on delete no action #restrict和 no action作用差不多
+         on update cascade,
+
+         type in('一居室','二居室','三居室','四居室','五居室'),
+         status in('审核','出售','已出售')
+    )
+
+任务：二手房交易系统-----留言信息管理模块
+
+子任务：
+        用户留言
+        管理管管理留言
+        用户查看留言
+
+准备工作
+
+    房屋信息表
+    create table message(
+         messageId int primary key auto_increment unique,  #留言编号编号
+         userName varchar(50) not null, #发布人
+         time varchar(50) not null,     #发布时间
+         text varchar(500) not null,    #发布信息
+
+         foreign key(userName) references users(userName)
+         on delete no action #restrict和 no action作用差不多
+         on update cascade
+    )
+
+任务：二手房交易系统-----二手房交易模块
+
+子任务：
+        用户留言
+        管理管管理留言
+        用户查看留言
+
+准备工作
+
+    房屋信息表
+    create table deal(
+         dealId int primary key auto_increment unique,  #交易订单编号
+         houseId int not null,           #房屋编号
+         userNameA varchar(50) not null, #卖方
+         userNameB varchar(50) not null, #买方
+         time varchar(50) not null,      #签订时间
+
+         foreign key(userNameA) references users(userName)
+         on delete no action #restrict和 no action作用差不多
+         on update cascade,
+
+         foreign key(userNameB) references users(userName)
+         on delete no action #restrict和 no action作用差不多
+         on update cascade
+    )

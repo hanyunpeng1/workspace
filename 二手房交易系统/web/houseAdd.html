@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+    <form action="/myWeb/house/add" method="get">
+        <table border="2px" align="center">
+<!--            <tr>
+                <td style="border-style:none;">房源编号：</td>
+                <td>
+                    <input type="text" name="houseId"/>
+                </td>
+            </tr>-->
+            <tr>
+                <td style="border-style:none;">户型：</td>
+                <td>
+                    <input type="radio" name="type" value="一室一厅">一室一厅
+                    <input type="radio" name="type" value="两室一厅">两室一厅
+                    <input type="radio" name="type" value="三室一厅">三室一厅
+                    <input type="radio" name="type" value="三室两厅">三室两厅
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style:none;">面积：</td>
+                <td><input type="text" name="acreage"></td>
+            </tr>
+            <tr>
+                <td style="border-style:none;">装修：</td>
+                <td>
+                    <input type="radio" name="finish" value="精装房">精装房
+                    <input type="radio" name="finish" value="二手房">二手房
+                    <input type="radio" name="finish" value="毛坯房">毛坯房
+
+                </td>
+            </tr>
+            <tr>
+                <td style="border-style:none;">价格：</td>
+                <td><input type="text" name="price"></td>
+            </tr>
+            <tr>
+                <td style="border-style:none;">地址：</td>
+                <td><input type="text" name="address"></td>
+            </tr>
+            <tr>
+                <td style="border-style:none;">联系人：</td>
+                <td><input type="text" name="userName"></td>
+            </tr>
+            <tr>
+                <td style="border-style:none;">联系人电话：</td>
+                <td><input type="text" name="tel"></td>
+            </tr>
+            <tr>
+                <td style="border-style:none;">发布人编号：</td>
+                <td><input type="text" name="userId"></td>
+            </tr>
+    <!--        <tr>
+                <td style="border-style:none;">发布状态：</td>
+                <td>
+                    <input type="radio" name="status" value="待审核">待审核
+                    <input type="radio" name="status" value="审核通过">审核通过
+                    <input type="radio" name="status" value="已出售">已出售
+                    <input type="radio" name="status" value="出售">出售
+                </td>
+            </tr>-->
+            <tr>
+                <td align="center"><input type="submit"  ></td>
+                <td align="center"><input type="reset" ></td>
+            </tr>
+        </table>
+    </form>
+</center>
+</body>
+</html>
